@@ -1,0 +1,39 @@
+
+
+一、let 和 const
+    
+    1、let 和 var 相比 不存在变量提升、存在暂时性死区（先赋值后引用）、不允许重复声明和块级作用域
+    2、const 声明一个只读常量 必须初始化且不可更改
+ 
+二、 变量的解构赋值 
+    
+    1、数组解构赋值
+      1）let [a,b,c] = [1,2,3]  //这种写法属于“模式匹配”，只要等号两边的模式相同，左边的变量就会被赋予对应的值 对应不上就是undifined
+      2）let [a,b] = [1,2,3] // 不完全解构 a=1;b=2
+      3）let [a,b=1] = [2] //  a=2;b=1  如果赋值为undifined为默认值，如果赋值为null就为null
+      
+    2、对象解构赋值
+      1）let {a,b} = {a: 1, b: 2} // 无序但name必须匹配
+      
+    3、用途
+      1）值交换
+      
+            let x = 1;
+            let y = 2;
+            [x,y] = [y,x]; // x=2;y=1;
+        
+       2）遍历map
+       
+            var map = new Map();
+            map.set('first', 'hello');
+            map.set('second', 'world');
+
+            for (let [key, value] of map) {
+              console.log(key + " is " + value);
+            }
+            
+三、字符串的拓展
+    
+    1、字符串遍历 for of
+    2、at（index） //字符串的第几个
+    3、includes（）：是否包含； startwith（）是否什么开头，endwith（）是否以什么结尾
