@@ -1,0 +1,164 @@
+
+
+Sass
+http://www.ruanyifeng.com/blog/2012/06/sass.html
+
+
+1、 介绍  
+      Sass 是一款强化 CSS 的辅助工具，
+      它在 CSS 语法的基础上增加了变量 (variables)、嵌套 (nested rules)、混合 (mixins)、导入 (inline imports) 等高级功能，
+      这些拓展令 CSS 更加强大与优雅。
+
+2、 安装 Ruby：官网； 安装 SASS： gem install sass
+
+
+3、 使用
+      
+      1） sass test.scss 把.scss 转换为.css代码
+      2） sass --style compressed test.scss test.css 把test.scss 另存为 test.css。可加入编译风格。 --style compressed
+
+          nested：嵌套缩进的css代码，它是默认值
+          expanded：没有缩进的、扩展的css代码
+          compact：简洁格式的css代码
+          compressed：压缩后的css代码
+          
+       3)  sass --watch test.scss:test.css 监听文件变化后编译； sass -- watch app/sass : public/xx 监听文档
+       
+
+4、 基本用法
+    
+      1） 变量 使用 $ 开头 可使用 #{$变量名}，进行字符串嵌套; !global 把局部变量变成全局变量，!default默认值
+      
+            $white :  #fff
+            $side : left
+            
+            div {
+                color: $white
+            }
+            
+            .round {
+                border-#{$side}-radius: 5px
+            }
+            
+            
+        2)  计算功能
+        
+            body  {
+              margin: (14px/2);
+              top: 12px + 8px;
+              right: $val * 2
+            }
+            
+         3)  嵌套：选择器嵌套和属性嵌套，嵌套中可使用&引用父元素
+         
+            div {
+              h1 {
+                  color: red
+              }
+            }
+            
+            a {
+              &: hover{
+                color: #fff
+              }
+            }
+            
+            
+  5、注释 
+            
+          1） /* */  会保留到编译后的文件， 加！表示重要的注释常用于版权等信息 /*! */       
+          2） // 单行注释只保存在源文件
+            
+            
+  6、代码重用
+            
+          1） 继承： 选择器之间的继承 使用@extend
+              
+              
+              .class1 {
+                  border: 1px solid #fff
+              }
+              
+              
+              .class2 {
+                  @extend .class1 
+                  font-size: 22px
+              }
+              
+           2) Mixin 类似于宏定义
+              
+              // 简单定义
+              @mixin left {
+                  float: left;
+                  margin-left: 20px
+              }
+              
+              // 简单使用
+              div {
+                @include left
+              }
+              
+              // 指定参数和缺省值
+              @mixin left($val: 10px){
+                float: left;
+                margin-left: $val
+              }
+              
+              // 使用
+              div {
+                @include left(20px);
+              }
+              
+              
+  7、颜色函数
+    
+        lighten(#cc3,10%)
+        darken(#cc3,10%)
+        grayscale(#cc3)
+        complement(#cc3) 
+          
+  
+  
+  8、插入外部文件：@import filepath/filename.scss ;@import "foo.css";
+  
+  
+  9、控制 条件语句、循环语句
+  
+      条件语句： 
+            
+          P {
+              @if $color == 1 { background-color: #fff} @else {background-color: #000}
+          }
+       
+       循环语句：
+       
+       
+          // for 循环
+          @for $i from 1 to 10 {
+              .border-#{$i}: #{$i}px solid #fff
+          }
+       ------------------------------------------------   
+          // while循环
+          $j: 6
+          @while $j < 10 {
+            // todo
+            $j: $j + 1;
+          }
+       ------------------------------------------------
+       // each 相当于 for
+       @each $number in a ,b ,c ,d {
+          . #{$number}{
+              background: url('images/#{$number}.png');
+          }
+       }
+          
+          
+          
+  10、自定义函数
+      
+      @funaction getcolor(#color){
+        retrun #color
+      }
+              
+      
+      
