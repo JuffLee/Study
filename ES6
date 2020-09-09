@@ -37,3 +37,18 @@
     1、字符串遍历 for of
     2、at（index） //字符串的第几个
     3、includes（）：是否包含； startwith（）是否什么开头，endwith（）是否以什么结尾
+    
+ 
+ 四、正则表达
+        
+     1、ES5的俩种构建：
+        var regex = new RexExp('abd',i);  // 相当于 var regex = /abd/i;
+        var regex = new RexExp(/abc/i);   // 相当于 var regex = /abd/i;
+        ES6中添加了：var regex = new RexExp(/abc/ig,i); // 相当于 var regex = /abd/i;
+ 
+ 五、Math扩展
+    
+    1、Math.trunc(4.1); // 4除去小数部分
+    2、
+    
+    
