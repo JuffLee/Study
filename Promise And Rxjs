@@ -1,0 +1,48 @@
+
+一、 Promise和Rxjs解决Ajax 的回调地狱问题。（异步操作）
+
+
+二、 Promise
+      1、创建
+        var promise = new Promise((resolve,reject) =>{
+            // todo
+            if(xxx){
+              reject()
+            }
+            resolve();
+        });
+     2、使用
+        function resolve(){};
+        function reject(){};
+        promise.then(resolve,reject);
+     3、更现代用法
+        函数会返回一个Promise对象，可以将回调函数绑定在Promise上
+        createAudioFileAsync(audioSettings).then(successCallback, failureCallback);
+     4、链式调用
+        dosometion().then( (result) => dosomeelse()).cath(err =>{});
+     5、加入async和await
+        async function get() {
+          try{
+            const result = await doSomething();
+            const newResult = await doSomethingElse(result);
+            console.log(newResult)
+          }cath(){
+          }
+        }
+      6、组合
+          Promise.all()和Promise.race()是并行运行异步操作的：
+          Promise.all([func1(), func2(), func3()]).then(([result1, result2, result3]) => { /* use result1, result2 and result3 */ });  //先当与一个链式调用
+          加入async和await之后：
+          let result;
+          for(const f of [func1(), func2(), func3()]) { 
+            result = await f(result);
+          }
+四、 Promise和Rxjs的主要区别
+    
+    1、Rxjs可以中途取消。
+    2、Rxjs可以发射多个值。
+    3、Rxjs有各种功能函数。
+    
+    so，没用使用上述优点的可以优先选择Promise更简单。
+
+
