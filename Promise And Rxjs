@@ -37,6 +37,97 @@
           for(const f of [func1(), func2(), func3()]) { 
             result = await f(result);
           }
+
+三、Rxjs
+    
+    1、基本概念
+       Observable: (可观察对象): 表示一个概念，这个概念是一个可调用的未来值或事件的集合。
+       Observer:(观察者): 一个回调函数的集合，它知道如何去监听由 Observable 提供的值。
+       Subscription(订阅): 表示 Observable 的执行，主要用于取消 Observable 的执行。
+       Operator: (操作符): 采用函数式编程风格的纯函数 (pure function)，使用像 map、filter、concat、flatMap 等这样的操作符来处理集合。
+       Subject:(主体): 相当于 EventEmitter，并且是将值或事件多路推送给多个 Observer 的唯一方式
+       Schdules (调度器): 用来控制并发并且是中央集权的调度员，允许我们在发生计算时进行协调，例如 setTimeout 或 requestAnimationFrame 或其他
+
+     2、Observable
+       Observables 是多个值的惰性推送集合。它填补了下面表格中的空白：
+                 单个值	        多个值
+       拉取	  Function	        Iterator
+       推送	   Promise	       Observable
+       
+       1）CREATE
+            const observable = Observaber.create( observer =>{
+                  observer.next(value);
+            });
+           var subscription = observable.subscribe({
+                  next: () =>{},
+                  error: () =>{},
+                  complete: ()=>{}
+            });
+            subscription.unscripte();
+       
+       2) Of 类似一个迭代器，将参数迭代然后发出。
+            const source = of('1','2');
+            source.subscribe({
+                  next: ()=>{},
+                  error: ()=>{},
+                  complete: ()=>{}
+            });
+        
+        3) from 于of类似，传入的参数是一个类数组
+             const source = from([1,2,3]);
+             source.subscribe({
+                  next: () =>{},
+                  error: () =>{},
+                  complete: () =>{},
+             });
+             
+         4) fromPromise遍历Promise与上述相同。
+         
+         5）fromEvent处理dom事件
+              const source = formEvent(document.body,'onclick')
+              
+         6) enpty() 返回一个空的Obvervable，当subscribe()时只执行complete函数；throw() 它也只做一件事就是拋出错误。
+         
+         7) interval(value*1000) 返回一个value秒发送一次值的Obvervable。
+         
+         8）RX.Observable.time(1000,5000) 第一个表示发送第一次值的延迟时间，第二个表示发送第二次值的间隔时间。
+         
+         9）take(value) 获取interval中的前value次的传值
+                var source = interval(1000);
+                var example = source.pipe(take(3));
+                
+         10) first(), lastTake(),last()，skip（），startWith（） 其中pipe可以使用多个
+         
+         11）takeUntil() 参数为一个Observable,当参数Observable订阅发生，终止takeUntil绑定的observable
+         
+              var click = formEvent(document.body,'click');
+              var source = interval(1000).pipe(takeUnitil(click));  // 当点击body时停止
+         12） concat() 和 cancat() 将Obvervable合并起来执行，执行完一个再执行另外一个。
+              
+              const source1 = interval(1000).pipe(take(3));
+              const source2 = of(3);
+              const source3 = of(4);
+              
+              const example = source1.pipe(concat(source2,source3));
+              example.subscribe({
+                  next: value => console.log(value),
+                  error: () =>{},
+                  complete: () =>{}
+              });  // 0 1 2 3 4
+          
+          13) merge使用方式和concat一样，区别就是merge处理的Observable是异步执行的，没有先后顺序
+          
+          14) delay(value)会将observable第一次发出订阅的时间延迟，delayWhen()和delay()不同，他的延迟时间由参数函数决定，并且会将主订阅对象发出的值作为 参数
+          
+          15) distinct() 去掉重复
+          
+          16）combineLatest 整合多个Obversable 参数Observable中有一个发生变化都会发起订阅
+               
+               var example = combineLatest(...Obversable);
+               example.subscribe( value = >{
+                  // value 为多个Obversable发射的值
+               })
+
 四、 Promise和Rxjs的主要区别
     
     1、Rxjs可以中途取消。
